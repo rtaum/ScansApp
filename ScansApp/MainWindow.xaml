@@ -33,6 +33,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
@@ -48,14 +49,20 @@
                 Content="Next"
                 MinWidth="72" />
 
-            <ComboBox
+            <Button
                 Grid.Column="2"
+                Command="{Binding GoToKeyImageCommand}"
+                Content="Key Image"
+                MinWidth="92" />
+
+            <ComboBox
+                Grid.Column="3"
                 ItemsSource="{Binding AvailableScanIds}"
                 SelectedItem="{Binding SelectedScanId, Mode=TwoWay}"
                 PlaceholderText="Select scan" />
 
             <Button
-                Grid.Column="3"
+                Grid.Column="4"
                 Command="{Binding LoadScanCommand}"
                 Content=">>"
                 MinWidth="56" />

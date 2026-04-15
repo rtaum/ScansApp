@@ -53,6 +53,7 @@ public partial class MainViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsScanLoaded));
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                GoToKeyImageCommand.NotifyCanExecuteChanged();
                 NextImageCommand.NotifyCanExecuteChanged();
                 PreviousImageCommand.NotifyCanExecuteChanged();
             }
@@ -70,6 +71,7 @@ public partial class MainViewModel : ObservableObject
             {
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                GoToKeyImageCommand.NotifyCanExecuteChanged();
                 NextImageCommand.NotifyCanExecuteChanged();
                 PreviousImageCommand.NotifyCanExecuteChanged();
             }
@@ -109,7 +111,20 @@ public partial class MainViewModel : ObservableObject
         CurrentImageIndex--;
     }
 
+    [RelayCommand(CanExecute = nameof(CanGoToKeyImage))]
+    private void GoToKeyImage()
+    {
+        if (!CanGoToKeyImage())
+        {
+            return;
+        }
+
+        CurrentImageIndex = LoadedScan!.KeyImageIndex;
+    }
+
     private bool CanLoadScan() => !string.IsNullOrWhiteSpace(SelectedScanId);
+
+    private bool CanGoToKeyImage() => LoadedScan is not null && CurrentImageIndex != LoadedScan.KeyImageIndex;
 
     private bool CanMoveNext() => LoadedScan is not null && CurrentImageIndex < LoadedScan.ImageCount - 1;
 

@@ -106,6 +106,30 @@ public sealed class MainViewModelTests : IDisposable
         Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
     }
 
+    [Fact]
+    public void KeyImageCommand_ReturnsToMiddleImageFromAnotherFrame()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository);
+
+        viewModel.LoadScanCommand.Execute(null);
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.NextImageCommand.Execute(null);
+
+        Assert.Equal(3, viewModel.CurrentImageIndex);
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.GoToKeyImageCommand.Execute(null);
+
+        Assert.Equal(2, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(scansRoot))
