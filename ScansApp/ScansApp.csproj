@@ -40,6 +40,527 @@
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1721" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260317003" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ScansApp.Core\ScansApp.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Models\**\*.cs" />
+    <Compile Remove="Services\**\*.cs" />
+    <Compile Remove="ViewModels\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="logos\" />
+    <Folder Include="scans\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="logos\key-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\key.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\load-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Load.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Next-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Next.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Pause-Disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Pause_default.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Play-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Play.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Prev-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Prev.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Speed-disabled.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="logos\Speed.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_25.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_26.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_27.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_28.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_25.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_26.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_27.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_28.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\123456\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000299.4_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000052.4_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\234567\Plane-B\1.3.12.2.1107.5.4.5.121068.30000021040417341706300000053.4_9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_000.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_003.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_004.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_005.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_006.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_007.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_009.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_010.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_011.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_012.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_013.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_014.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_015.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_016.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_017.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_018.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_019.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_020.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane-A\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000836.4_021.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_000.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_002.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_003.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_004.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_005.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_006.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_007.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_008.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_009.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_010.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_011.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_012.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_013.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_014.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_015.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_016.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_017.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_018.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_019.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_020.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_021.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_022.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_023.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="scans\345678\Plane_B\1.3.12.2.1107.5.4.5.121068.30000022020604224481000000837.4_024.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <!--
     Defining the "HasPackageAndPublishMenuAddedByProject" property here allows the Solution
