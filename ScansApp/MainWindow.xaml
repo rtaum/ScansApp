@@ -68,12 +68,19 @@
                         MinHeight="320"
                         Background="#8A8A8A"
                         CornerRadius="8">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="{Binding LoadedScan.PlaneAImages.Count, FallbackValue=Not loaded}"
-                            FontSize="18" />
+                        <Grid>
+                            <Image
+                                x:Name="PlaneAImage"
+                                Stretch="Uniform"
+                                Visibility="Collapsed" />
+                            <TextBlock
+                                x:Name="PlaneAPlaceholder"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                Text="Not loaded"
+                                FontSize="18" />
+                        </Grid>
                     </Border>
                 </StackPanel>
             </Border>
@@ -92,12 +99,19 @@
                         MinHeight="320"
                         Background="#8A8A8A"
                         CornerRadius="8">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            Foreground="White"
-                            Text="{Binding LoadedScan.PlaneBImages.Count, FallbackValue=Not loaded}"
-                            FontSize="18" />
+                        <Grid>
+                            <Image
+                                x:Name="PlaneBImage"
+                                Stretch="Uniform"
+                                Visibility="Collapsed" />
+                            <TextBlock
+                                x:Name="PlaneBPlaceholder"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Foreground="White"
+                                Text="Not loaded"
+                                FontSize="18" />
+                        </Grid>
                     </Border>
                 </StackPanel>
             </Border>

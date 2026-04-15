@@ -17,4 +17,8 @@ public sealed class Scan
     public IReadOnlyList<string> PlaneAImages { get; }
 
     public IReadOnlyList<string> PlaneBImages { get; }
+
+    public int ImageCount => Math.Min(PlaneAImages.Count, PlaneBImages.Count);
+
+    public int KeyImageIndex => ImageCount == 0 ? -1 : (ImageCount - 1) / 2;
 }

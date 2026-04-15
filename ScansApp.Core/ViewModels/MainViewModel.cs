@@ -12,6 +12,7 @@ public partial class MainViewModel : ObservableObject
     private readonly IScanRepository scanRepository;
     private string? selectedScanId;
     private Scan? loadedScan;
+    private int currentImageIndex = -1;
 
     public MainViewModel(IScanRepository scanRepository)
     {
@@ -50,17 +51,47 @@ public partial class MainViewModel : ObservableObject
             if (SetProperty(ref loadedScan, value))
             {
                 OnPropertyChanged(nameof(IsScanLoaded));
+                OnPropertyChanged(nameof(CurrentPlaneAImagePath));
+                OnPropertyChanged(nameof(CurrentPlaneBImagePath));
             }
         }
     }
 
     public bool IsScanLoaded => LoadedScan is not null;
 
+    public int CurrentImageIndex
+    {
+        get => currentImageIndex;
+        private set
+        {
+            if (SetProperty(ref currentImageIndex, value))
+            {
+                OnPropertyChanged(nameof(CurrentPlaneAImagePath));
+                OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+            }
+        }
+    }
+
+    public string? CurrentPlaneAImagePath => GetCurrentImagePath(LoadedScan?.PlaneAImages);
+
+    public string? CurrentPlaneBImagePath => GetCurrentImagePath(LoadedScan?.PlaneBImages);
+
     [RelayCommand(CanExecute = nameof(CanLoadScan))]
     private void LoadScan()
     {
         LoadedScan = scanRepository.LoadScan(SelectedScanId!);
+        CurrentImageIndex = LoadedScan.KeyImageIndex;
     }
 
     private bool CanLoadScan() => !string.IsNullOrWhiteSpace(SelectedScanId);
+
+    private string? GetCurrentImagePath(IReadOnlyList<string>? images)
+    {
+        if (images is null || CurrentImageIndex < 0 || CurrentImageIndex >= images.Count)
+        {
+            return null;
+        }
+
+        return images[CurrentImageIndex];
+    }
 }
