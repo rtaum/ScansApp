@@ -18,6 +18,7 @@ public partial class MainViewModel : ObservableObject
     private int currentImageIndex = -1;
     private bool isPlaying;
     private bool hasPlaybackControlsEnabled;
+    private double sliderValue;
 
     public MainViewModel(IScanRepository scanRepository, IPlaybackScheduler playbackScheduler)
     {
@@ -64,6 +65,21 @@ public partial class MainViewModel : ObservableObject
         }
     }
 
+    public double SliderMaximum => Math.Max(0, (LoadedScan?.ImageCount ?? 0) - 1);
+
+    public double SliderValue
+    {
+        get => sliderValue;
+        set
+        {
+            var clampedValue = Math.Clamp(value, 0, SliderMaximum);
+            if (SetProperty(ref sliderValue, clampedValue))
+            {
+                SetCurrentImageIndex((int)Math.Round(clampedValue, MidpointRounding.AwayFromZero));
+            }
+        }
+    }
+
     public string? SelectedScanId
     {
         get => selectedScanId;
@@ -86,6 +102,7 @@ public partial class MainViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsScanLoaded));
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                OnPropertyChanged(nameof(SliderMaximum));
                 PlayCommand.NotifyCanExecuteChanged();
                 PauseCommand.NotifyCanExecuteChanged();
                 GoToKeyImageCommand.NotifyCanExecuteChanged();
@@ -104,6 +121,7 @@ public partial class MainViewModel : ObservableObject
         {
             if (SetProperty(ref currentImageIndex, value))
             {
+                SetProperty(ref sliderValue, value, nameof(SliderValue));
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
                 GoToKeyImageCommand.NotifyCanExecuteChanged();
@@ -214,6 +232,16 @@ public partial class MainViewModel : ObservableObject
     {
         playbackScheduler.Stop();
         IsPlaying = false;
+    }
+
+    private void SetCurrentImageIndex(int imageIndex)
+    {
+        if (LoadedScan is null || LoadedScan.ImageCount == 0)
+        {
+            return;
+        }
+
+        CurrentImageIndex = Math.Clamp(imageIndex, 0, LoadedScan.ImageCount - 1);
     }
 
     private string? GetCurrentImagePath(IReadOnlyList<string>? images)

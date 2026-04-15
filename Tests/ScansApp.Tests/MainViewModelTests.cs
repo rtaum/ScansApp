@@ -195,6 +195,34 @@ public sealed class MainViewModelTests : IDisposable
         Assert.Equal(1, viewModel.CurrentImageIndex);
     }
 
+    [Fact]
+    public void SliderValue_ChangesDisplayedImagesAccordingToPosition()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
+
+        Assert.Equal(4d, viewModel.SliderMaximum);
+        Assert.Equal(0d, viewModel.SliderValue);
+
+        viewModel.SliderValue = 4;
+
+        Assert.Equal(4, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_004.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_004.png", viewModel.CurrentPlaneBImagePath);
+
+        viewModel.SliderValue = 1;
+
+        Assert.Equal(1, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_001.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_001.png", viewModel.CurrentPlaneBImagePath);
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(scansRoot))

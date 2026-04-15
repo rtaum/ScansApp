@@ -37,13 +37,15 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <Slider
                 x:Name="ImageSlider"
                 Minimum="0"
-                Maximum="100"
+                Maximum="{Binding SliderMaximum}"
+                Value="{Binding SliderValue, Mode=TwoWay}"
                 IsEnabled="{Binding ArePlaybackControlsEnabled}" />
 
             <Button
