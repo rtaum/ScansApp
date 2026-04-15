@@ -48,16 +48,23 @@ public sealed partial class MainWindow : Window
     {
         PlaybackButton.Command = viewModel.IsPlaying ? viewModel.PauseCommand : viewModel.PlayCommand;
 
-        SetSvgSource(PreviousButtonIcon, PreviousButton.IsEnabled ? "ms-appx:///logos/Prev.svg" : "ms-appx:///logos/Prev-disabled.svg");
+        var previousEnabled = viewModel.PreviousImageCommand.CanExecute(null);
+        var playbackEnabled = (viewModel.IsPlaying ? viewModel.PauseCommand : viewModel.PlayCommand).CanExecute(null);
+        var nextEnabled = viewModel.NextImageCommand.CanExecute(null);
+        var keyImageEnabled = viewModel.GoToKeyImageCommand.CanExecute(null);
+        var speedEnabled = viewModel.ArePlaybackControlsEnabled;
+        var loadEnabled = viewModel.LoadScanCommand.CanExecute(null);
+
+        SetSvgSource(PreviousButtonIcon, previousEnabled ? "ms-appx:///logos/Prev.svg" : "ms-appx:///logos/Prev-disabled.svg");
         SetSvgSource(
             PlaybackButtonIcon,
             viewModel.IsPlaying
-                ? (PlaybackButton.IsEnabled ? "ms-appx:///logos/Pause_default.svg" : "ms-appx:///logos/Pause-Disabled.svg")
-                : (PlaybackButton.IsEnabled ? "ms-appx:///logos/Play.svg" : "ms-appx:///logos/Play-disabled.svg"));
-        SetSvgSource(NextButtonIcon, NextButton.IsEnabled ? "ms-appx:///logos/Next.svg" : "ms-appx:///logos/Next-disabled.svg");
-        SetSvgSource(KeyImageButtonIcon, KeyImageButton.IsEnabled ? "ms-appx:///logos/key.svg" : "ms-appx:///logos/key-disabled.svg");
-        SetSvgSource(LoadButtonIcon, LoadButton.IsEnabled ? "ms-appx:///logos/Load.svg" : "ms-appx:///logos/load-disabled.svg");
-        SetSvgSource(SpeedIcon, SpeedComboBox.IsEnabled ? "ms-appx:///logos/Speed.svg" : "ms-appx:///logos/Speed-disabled.svg");
+                ? (playbackEnabled ? "ms-appx:///logos/Pause_default.svg" : "ms-appx:///logos/Pause-Disabled.svg")
+                : (playbackEnabled ? "ms-appx:///logos/Play.svg" : "ms-appx:///logos/Play-disabled.svg"));
+        SetSvgSource(NextButtonIcon, nextEnabled ? "ms-appx:///logos/Next.svg" : "ms-appx:///logos/Next-disabled.svg");
+        SetSvgSource(KeyImageButtonIcon, keyImageEnabled ? "ms-appx:///logos/key.svg" : "ms-appx:///logos/key-disabled.svg");
+        SetSvgSource(LoadButtonIcon, loadEnabled ? "ms-appx:///logos/Load.svg" : "ms-appx:///logos/load-disabled.svg");
+        SetSvgSource(SpeedIcon, speedEnabled ? "ms-appx:///logos/Speed.svg" : "ms-appx:///logos/Speed-disabled.svg");
     }
 
     private static void SetImageSource(Microsoft.UI.Xaml.Controls.Image image, Microsoft.UI.Xaml.Controls.TextBlock placeholder, string? imagePath)

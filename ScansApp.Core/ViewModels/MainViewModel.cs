@@ -61,6 +61,7 @@ public partial class MainViewModel : ObservableObject
             {
                 PlayCommand.NotifyCanExecuteChanged();
                 PauseCommand.NotifyCanExecuteChanged();
+                GoToKeyImageCommand.NotifyCanExecuteChanged();
                 NextImageCommand.NotifyCanExecuteChanged();
                 PreviousImageCommand.NotifyCanExecuteChanged();
             }
@@ -249,11 +250,11 @@ public partial class MainViewModel : ObservableObject
 
     private bool CanPause() => IsPlaying;
 
-    private bool CanGoToKeyImage() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
+    private bool CanGoToKeyImage() => !IsPlaying && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
-    private bool CanMoveNext() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
+    private bool CanMoveNext() => !IsPlaying && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
-    private bool CanMovePrevious() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
+    private bool CanMovePrevious() => !IsPlaying && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
     private void AdvancePlayback()
     {

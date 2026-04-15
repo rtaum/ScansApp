@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Windows.Input;
 using ScansApp.Services;
 using ScansApp.ViewModels;
 using Xunit;
@@ -53,6 +54,8 @@ public sealed class MainViewModelTests : IDisposable
         Assert.Equal(2, viewModel.CurrentImageIndex);
         Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
         Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
     }
 
     [Fact]
@@ -121,7 +124,7 @@ public sealed class MainViewModelTests : IDisposable
         var viewModel = new MainViewModel(repository, playbackScheduler);
 
         viewModel.LoadScanCommand.Execute(null);
-        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
 
         viewModel.PlayCommand.Execute(null);
         viewModel.PauseCommand.Execute(null);
@@ -211,9 +214,9 @@ public sealed class MainViewModelTests : IDisposable
 
         viewModel.LoadScanCommand.Execute(null);
 
-        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
-        Assert.False(viewModel.NextImageCommand.CanExecute(null));
-        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
 
         viewModel.PlayCommand.Execute(null);
 
@@ -239,7 +242,7 @@ public sealed class MainViewModelTests : IDisposable
 
         viewModel.LoadScanCommand.Execute(null);
 
-        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
 
         viewModel.PlayCommand.Execute(null);
         Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
@@ -252,6 +255,68 @@ public sealed class MainViewModelTests : IDisposable
 
         viewModel.PlayCommand.Execute(null);
         Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+    }
+
+    [Fact]
+    public void KeyImageCommand_AfterPlayThenPause_JumpsBackToMiddleWithoutPrevOrNext()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
+
+        Assert.Equal(0, viewModel.CurrentImageIndex);
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.GoToKeyImageCommand.Execute(null);
+
+        Assert.Equal(2, viewModel.CurrentImageIndex);
+        Assert.Equal(2d, viewModel.SliderValue);
+        Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
+    }
+
+    [Fact]
+    public void KeyImageCommand_RaisesCanExecuteChanged_WhenPlayStateChanges()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+        var canExecuteChangedCount = 0;
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.GoToKeyImageCommand.CanExecuteChanged += OnCanExecuteChanged;
+
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
+
+        Assert.True(canExecuteChangedCount >= 2);
+
+        viewModel.GoToKeyImageCommand.CanExecuteChanged -= OnCanExecuteChanged;
+        return;
+
+        void OnCanExecuteChanged(object? sender, EventArgs e)
+        {
+            canExecuteChangedCount++;
+        }
+    }
+
+    [Fact]
+    public void KeyImageCommand_IsEnabledImmediatelyAfterScanLoad()
+    {
+        CreateScan("100001", planeAImageCount: 4, planeBImageCount: 4);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
     }
 
     [Fact]
@@ -342,9 +407,9 @@ public sealed class MainViewModelTests : IDisposable
         Assert.Equal("200002", viewModel.LoadedScan!.Id);
         Assert.Equal(1, viewModel.CurrentImageIndex);
         Assert.Equal(1d, viewModel.SliderValue);
-        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
-        Assert.False(viewModel.NextImageCommand.CanExecute(null));
-        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
     }
 
     public void Dispose()
