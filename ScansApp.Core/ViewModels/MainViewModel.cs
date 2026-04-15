@@ -9,14 +9,20 @@ namespace ScansApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
+    private static readonly TimeSpan NormalPlaybackInterval = TimeSpan.FromMilliseconds(200);
+
     private readonly IScanRepository scanRepository;
+    private readonly IPlaybackScheduler playbackScheduler;
     private string? selectedScanId;
     private Scan? loadedScan;
     private int currentImageIndex = -1;
+    private bool isPlaying;
+    private bool hasPlaybackControlsEnabled;
 
-    public MainViewModel(IScanRepository scanRepository)
+    public MainViewModel(IScanRepository scanRepository, IPlaybackScheduler playbackScheduler)
     {
         this.scanRepository = scanRepository ?? throw new ArgumentNullException(nameof(scanRepository));
+        this.playbackScheduler = playbackScheduler ?? throw new ArgumentNullException(nameof(playbackScheduler));
 
         foreach (var scanId in scanRepository.GetAvailableScanIds())
         {
@@ -30,6 +36,33 @@ public partial class MainViewModel : ObservableObject
     }
 
     public ObservableCollection<string> AvailableScanIds { get; } = new();
+
+    public bool IsPlaying
+    {
+        get => isPlaying;
+        private set
+        {
+            if (SetProperty(ref isPlaying, value))
+            {
+                PlayCommand.NotifyCanExecuteChanged();
+                PauseCommand.NotifyCanExecuteChanged();
+                NextImageCommand.NotifyCanExecuteChanged();
+                PreviousImageCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
+
+    public bool ArePlaybackControlsEnabled
+    {
+        get => hasPlaybackControlsEnabled;
+        private set
+        {
+            if (SetProperty(ref hasPlaybackControlsEnabled, value))
+            {
+                GoToKeyImageCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
 
     public string? SelectedScanId
     {
@@ -53,6 +86,8 @@ public partial class MainViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsScanLoaded));
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                PlayCommand.NotifyCanExecuteChanged();
+                PauseCommand.NotifyCanExecuteChanged();
                 GoToKeyImageCommand.NotifyCanExecuteChanged();
                 NextImageCommand.NotifyCanExecuteChanged();
                 PreviousImageCommand.NotifyCanExecuteChanged();
@@ -85,8 +120,39 @@ public partial class MainViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanLoadScan))]
     private void LoadScan()
     {
+        StopPlayback();
         LoadedScan = scanRepository.LoadScan(SelectedScanId!);
         CurrentImageIndex = LoadedScan.KeyImageIndex;
+        ArePlaybackControlsEnabled = false;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPlay))]
+    private void Play()
+    {
+        if (!CanPlay())
+        {
+            return;
+        }
+
+        if (!ArePlaybackControlsEnabled)
+        {
+            CurrentImageIndex = 0;
+        }
+
+        ArePlaybackControlsEnabled = true;
+        IsPlaying = true;
+        playbackScheduler.Start(NormalPlaybackInterval, AdvancePlayback);
+    }
+
+    [RelayCommand(CanExecute = nameof(CanPause))]
+    private void Pause()
+    {
+        if (!CanPause())
+        {
+            return;
+        }
+
+        StopPlayback();
     }
 
     [RelayCommand(CanExecute = nameof(CanMoveNext))]
@@ -122,13 +188,33 @@ public partial class MainViewModel : ObservableObject
         CurrentImageIndex = LoadedScan!.KeyImageIndex;
     }
 
+    private bool CanPlay() => LoadedScan is not null && !IsPlaying;
+
     private bool CanLoadScan() => !string.IsNullOrWhiteSpace(SelectedScanId);
 
-    private bool CanGoToKeyImage() => LoadedScan is not null && CurrentImageIndex != LoadedScan.KeyImageIndex;
+    private bool CanPause() => IsPlaying;
 
-    private bool CanMoveNext() => LoadedScan is not null && CurrentImageIndex < LoadedScan.ImageCount - 1;
+    private bool CanGoToKeyImage() => ArePlaybackControlsEnabled && LoadedScan is not null && CurrentImageIndex != LoadedScan.KeyImageIndex;
 
-    private bool CanMovePrevious() => LoadedScan is not null && CurrentImageIndex > 0;
+    private bool CanMoveNext() => !IsPlaying && LoadedScan is not null && CurrentImageIndex < LoadedScan.ImageCount - 1;
+
+    private bool CanMovePrevious() => !IsPlaying && LoadedScan is not null && CurrentImageIndex > 0;
+
+    private void AdvancePlayback()
+    {
+        if (LoadedScan is null || LoadedScan.ImageCount == 0)
+        {
+            return;
+        }
+
+        CurrentImageIndex = (CurrentImageIndex + 1) % LoadedScan.ImageCount;
+    }
+
+    private void StopPlayback()
+    {
+        playbackScheduler.Stop();
+        IsPlaying = false;
+    }
 
     private string? GetCurrentImagePath(IReadOnlyList<string>? images)
     {

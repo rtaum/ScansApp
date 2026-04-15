@@ -17,15 +17,18 @@ public sealed partial class MainWindow : Window
         Root.DataContext = viewModel;
         viewModel.PropertyChanged += OnViewModelPropertyChanged;
         UpdateDisplayedImages();
+        UpdateControlState();
     }
 
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(MainViewModel.CurrentPlaneAImagePath)
             or nameof(MainViewModel.CurrentPlaneBImagePath)
-            or nameof(MainViewModel.IsScanLoaded))
+            or nameof(MainViewModel.IsScanLoaded)
+            or nameof(MainViewModel.IsPlaying))
         {
             UpdateDisplayedImages();
+            UpdateControlState();
         }
     }
 
@@ -33,6 +36,12 @@ public sealed partial class MainWindow : Window
     {
         SetImageSource(PlaneAImage, PlaneAPlaceholder, viewModel.CurrentPlaneAImagePath);
         SetImageSource(PlaneBImage, PlaneBPlaceholder, viewModel.CurrentPlaneBImagePath);
+    }
+
+    private void UpdateControlState()
+    {
+        PlayButton.Visibility = viewModel.IsPlaying ? Visibility.Collapsed : Visibility.Visible;
+        PauseButton.Visibility = viewModel.IsPlaying ? Visibility.Visible : Visibility.Collapsed;
     }
 
     private static void SetImageSource(Microsoft.UI.Xaml.Controls.Image image, Microsoft.UI.Xaml.Controls.TextBlock placeholder, string? imagePath)

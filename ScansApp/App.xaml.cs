@@ -19,7 +19,8 @@ public partial class App : Application
     {
         var scansRoot = Path.Combine(AppContext.BaseDirectory, "scans");
         var repository = new FileSystemScanRepository(scansRoot);
-        var viewModel = new MainViewModel(repository);
+        var playbackScheduler = new DispatcherQueuePlaybackScheduler(Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread());
+        var viewModel = new MainViewModel(repository, playbackScheduler);
 
         window = new MainWindow(viewModel);
         window.Activate();

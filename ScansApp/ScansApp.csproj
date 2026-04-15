@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Models\**\*.cs" />
-    <Compile Remove="Services\**\*.cs" />
     <Compile Remove="ViewModels\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
