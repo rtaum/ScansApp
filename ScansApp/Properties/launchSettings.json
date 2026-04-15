@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ScansApp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ScansApp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

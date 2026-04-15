@@ -1,0 +1,62 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+[Xx]64/
+[Xx]86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Bb]uild/
+[Ll]og/
+
+# Test results
+[Tt]est[Rr]esult*/
+[Bb]enchmark[Dd]ot[Nn]et.Artifacts/
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+.nuget/
+
+# WinUI / MSIX / App packages
+[Aa]pp[Pp]ackages/
+[Bb]undle[Aa]rtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+*.msix
+*.msixbundle
+*.msixupload
+
+# Publish output
+publish/
+
+# Generated files
+Generated Files/
+*.g.cs
+*.g.i.cs
+*.AssemblyAttributes.cs
+*.cache
+*.ide/
+
+# Resharper / Rider
+_ReSharper*/
+*.DotSettings.user
+
+# Logs
+*.log
+
+# OS files
+Thumbs.db
+Desktop.ini
