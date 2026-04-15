@@ -207,7 +207,7 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        CurrentImageIndex++;
+        SetCurrentImageIndex(CurrentImageIndex + 1);
     }
 
     [RelayCommand(CanExecute = nameof(CanMovePrevious))]
@@ -218,7 +218,7 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        CurrentImageIndex--;
+        SetCurrentImageIndex(CurrentImageIndex - 1);
     }
 
     [RelayCommand(CanExecute = nameof(CanGoToKeyImage))]
@@ -238,11 +238,11 @@ public partial class MainViewModel : ObservableObject
 
     private bool CanPause() => IsPlaying;
 
-    private bool CanGoToKeyImage() => ArePlaybackControlsEnabled && LoadedScan is not null && CurrentImageIndex != LoadedScan.KeyImageIndex;
+    private bool CanGoToKeyImage() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
-    private bool CanMoveNext() => !IsPlaying && LoadedScan is not null && CurrentImageIndex < LoadedScan.ImageCount - 1;
+    private bool CanMoveNext() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
-    private bool CanMovePrevious() => !IsPlaying && LoadedScan is not null && CurrentImageIndex > 0;
+    private bool CanMovePrevious() => !IsPlaying && ArePlaybackControlsEnabled && LoadedScan is not null && LoadedScan.ImageCount > 0;
 
     private void AdvancePlayback()
     {

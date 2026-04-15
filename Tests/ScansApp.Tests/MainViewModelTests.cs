@@ -64,18 +64,20 @@ public sealed class MainViewModelTests : IDisposable
         var viewModel = new MainViewModel(repository, playbackScheduler);
 
         viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
 
         viewModel.NextImageCommand.Execute(null);
 
-        Assert.Equal(3, viewModel.CurrentImageIndex);
-        Assert.EndsWith(@"Plane-A\image_003.png", viewModel.CurrentPlaneAImagePath);
-        Assert.EndsWith(@"Plane-B\image_003.png", viewModel.CurrentPlaneBImagePath);
+        Assert.Equal(1, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_001.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_001.png", viewModel.CurrentPlaneBImagePath);
 
         viewModel.PreviousImageCommand.Execute(null);
 
-        Assert.Equal(2, viewModel.CurrentImageIndex);
-        Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
-        Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
+        Assert.Equal(0, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_000.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_000.png", viewModel.CurrentPlaneBImagePath);
     }
 
     [Fact]
@@ -87,14 +89,17 @@ public sealed class MainViewModelTests : IDisposable
         var viewModel = new MainViewModel(repository, playbackScheduler);
 
         viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
 
         Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
         Assert.True(viewModel.NextImageCommand.CanExecute(null));
 
         viewModel.NextImageCommand.Execute(null);
+        viewModel.NextImageCommand.Execute(null);
 
         Assert.Equal(2, viewModel.CurrentImageIndex);
-        Assert.False(viewModel.NextImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
 
         viewModel.NextImageCommand.Execute(null);
 
@@ -104,7 +109,7 @@ public sealed class MainViewModelTests : IDisposable
         viewModel.PreviousImageCommand.Execute(null);
 
         Assert.Equal(0, viewModel.CurrentImageIndex);
-        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
     }
 
     [Fact]
@@ -120,6 +125,7 @@ public sealed class MainViewModelTests : IDisposable
 
         viewModel.PlayCommand.Execute(null);
         viewModel.PauseCommand.Execute(null);
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
         viewModel.NextImageCommand.Execute(null);
 
         Assert.Equal(1, viewModel.CurrentImageIndex);
@@ -130,7 +136,7 @@ public sealed class MainViewModelTests : IDisposable
         Assert.Equal(2, viewModel.CurrentImageIndex);
         Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
         Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
-        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
     }
 
     [Fact]
@@ -193,6 +199,34 @@ public sealed class MainViewModelTests : IDisposable
         playbackScheduler.Tick();
 
         Assert.Equal(1, viewModel.CurrentImageIndex);
+    }
+
+    [Fact]
+    public void PauseCommand_EnablesPrevNextAndKeyImage_AndPlayDisablesThem()
+    {
+        CreateScan("100001", planeAImageCount: 4, planeBImageCount: 4);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+
+        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.False(viewModel.NextImageCommand.CanExecute(null));
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.PlayCommand.Execute(null);
+
+        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.False(viewModel.NextImageCommand.CanExecute(null));
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        playbackScheduler.Tick();
+        viewModel.PauseCommand.Execute(null);
+
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
     }
 
     [Fact]
