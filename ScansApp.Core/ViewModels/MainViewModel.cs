@@ -9,11 +9,18 @@ namespace ScansApp.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
+    private const string SlowSpeed = "Slow";
+    private const string NormalSpeed = "Normal";
+    private const string FastSpeed = "Fast";
+
+    private static readonly TimeSpan SlowPlaybackInterval = TimeSpan.FromMilliseconds(400);
     private static readonly TimeSpan NormalPlaybackInterval = TimeSpan.FromMilliseconds(200);
+    private static readonly TimeSpan FastPlaybackInterval = TimeSpan.FromMilliseconds(100);
 
     private readonly IScanRepository scanRepository;
     private readonly IPlaybackScheduler playbackScheduler;
     private string? selectedScanId;
+    private string selectedSpeed = NormalSpeed;
     private Scan? loadedScan;
     private int currentImageIndex = -1;
     private bool isPlaying;
@@ -38,6 +45,13 @@ public partial class MainViewModel : ObservableObject
 
     public ObservableCollection<string> AvailableScanIds { get; } = new();
 
+    public ObservableCollection<string> SpeedOptions { get; } = new()
+    {
+        SlowSpeed,
+        NormalSpeed,
+        FastSpeed
+    };
+
     public bool IsPlaying
     {
         get => isPlaying;
@@ -61,6 +75,18 @@ public partial class MainViewModel : ObservableObject
             if (SetProperty(ref hasPlaybackControlsEnabled, value))
             {
                 GoToKeyImageCommand.NotifyCanExecuteChanged();
+            }
+        }
+    }
+
+    public string SelectedSpeed
+    {
+        get => selectedSpeed;
+        set
+        {
+            if (SetProperty(ref selectedSpeed, value))
+            {
+                ApplyPlaybackSpeed();
             }
         }
     }
@@ -159,7 +185,7 @@ public partial class MainViewModel : ObservableObject
 
         ArePlaybackControlsEnabled = true;
         IsPlaying = true;
-        playbackScheduler.Start(NormalPlaybackInterval, AdvancePlayback);
+        playbackScheduler.Start(GetPlaybackInterval(), AdvancePlayback);
     }
 
     [RelayCommand(CanExecute = nameof(CanPause))]
@@ -232,6 +258,24 @@ public partial class MainViewModel : ObservableObject
     {
         playbackScheduler.Stop();
         IsPlaying = false;
+    }
+
+    private void ApplyPlaybackSpeed()
+    {
+        if (IsPlaying)
+        {
+            playbackScheduler.Start(GetPlaybackInterval(), AdvancePlayback);
+        }
+    }
+
+    private TimeSpan GetPlaybackInterval()
+    {
+        return SelectedSpeed switch
+        {
+            SlowSpeed => SlowPlaybackInterval,
+            FastSpeed => FastPlaybackInterval,
+            _ => NormalPlaybackInterval
+        };
     }
 
     private void SetCurrentImageIndex(int imageIndex)

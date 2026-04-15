@@ -81,11 +81,8 @@
                 x:Name="SpeedComboBox"
                 Grid.Column="4"
                 IsEnabled="{Binding ArePlaybackControlsEnabled}"
-                SelectedIndex="1">
-                <x:String>Slow</x:String>
-                <x:String>Normal</x:String>
-                <x:String>Fast</x:String>
-            </ComboBox>
+                ItemsSource="{Binding SpeedOptions}"
+                SelectedItem="{Binding SelectedSpeed, Mode=TwoWay}" />
 
             <Button
                 x:Name="KeyImageButton"

@@ -223,6 +223,42 @@ public sealed class MainViewModelTests : IDisposable
         Assert.EndsWith(@"Plane-B\image_001.png", viewModel.CurrentPlaneBImagePath);
     }
 
+    [Fact]
+    public void PlayCommand_UsesSelectedPlaybackSpeed()
+    {
+        CreateScan("100001", planeAImageCount: 3, planeBImageCount: 3);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.SelectedSpeed = "Fast";
+
+        viewModel.PlayCommand.Execute(null);
+
+        Assert.Equal(TimeSpan.FromMilliseconds(100), playbackScheduler.Interval);
+    }
+
+    [Fact]
+    public void ChangingSpeedWhilePlaying_UpdatesPlaybackIntervalImmediately()
+    {
+        CreateScan("100001", planeAImageCount: 3, planeBImageCount: 3);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+
+        Assert.Equal(TimeSpan.FromMilliseconds(200), playbackScheduler.Interval);
+        Assert.Equal(1, playbackScheduler.StartCount);
+
+        viewModel.SelectedSpeed = "Slow";
+
+        Assert.Equal(TimeSpan.FromMilliseconds(400), playbackScheduler.Interval);
+        Assert.Equal(2, playbackScheduler.StartCount);
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(scansRoot))
@@ -257,11 +293,14 @@ public sealed class MainViewModelTests : IDisposable
 
         public TimeSpan? Interval { get; private set; }
 
+        public int StartCount { get; private set; }
+
         public bool IsRunning => tick is not null;
 
         public void Start(TimeSpan interval, Action tick)
         {
             Interval = interval;
+            StartCount++;
             this.tick = tick;
         }
 
