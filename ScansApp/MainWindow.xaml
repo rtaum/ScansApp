@@ -61,26 +61,12 @@
             </Button>
 
             <Button
-                x:Name="PlayButton"
+                x:Name="PlaybackButton"
                 Grid.Column="2"
-                Command="{Binding PlayCommand}"
                 MinWidth="44"
                 Padding="10,8">
                 <Image
-                    x:Name="PlayButtonIcon"
-                    Width="18"
-                    Height="18" />
-            </Button>
-
-            <Button
-                x:Name="PauseButton"
-                Grid.Column="2"
-                Command="{Binding PauseCommand}"
-                MinWidth="44"
-                Padding="10,8"
-                Visibility="Collapsed">
-                <Image
-                    x:Name="PauseButtonIcon"
+                    x:Name="PlaybackButtonIcon"
                     Width="18"
                     Height="18" />
             </Button>

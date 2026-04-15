@@ -23,14 +23,17 @@ public sealed partial class MainWindow : Window
     private void OnViewModelPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName is nameof(MainViewModel.CurrentPlaneAImagePath)
-            or nameof(MainViewModel.CurrentPlaneBImagePath)
-            or nameof(MainViewModel.IsScanLoaded)
+            or nameof(MainViewModel.CurrentPlaneBImagePath))
+        {
+            UpdateDisplayedImages();
+        }
+
+        if (e.PropertyName is nameof(MainViewModel.IsScanLoaded)
             or nameof(MainViewModel.IsPlaying)
             or nameof(MainViewModel.ArePlaybackControlsEnabled)
             or nameof(MainViewModel.CurrentImageIndex)
             or nameof(MainViewModel.SelectedScanId))
         {
-            UpdateDisplayedImages();
             UpdateControlState();
         }
     }
@@ -43,12 +46,14 @@ public sealed partial class MainWindow : Window
 
     private void UpdateControlState()
     {
-        PlayButton.Visibility = viewModel.IsPlaying ? Visibility.Collapsed : Visibility.Visible;
-        PauseButton.Visibility = viewModel.IsPlaying ? Visibility.Visible : Visibility.Collapsed;
+        PlaybackButton.Command = viewModel.IsPlaying ? viewModel.PauseCommand : viewModel.PlayCommand;
 
         SetSvgSource(PreviousButtonIcon, PreviousButton.IsEnabled ? "ms-appx:///logos/Prev.svg" : "ms-appx:///logos/Prev-disabled.svg");
-        SetSvgSource(PlayButtonIcon, PlayButton.IsEnabled ? "ms-appx:///logos/Play.svg" : "ms-appx:///logos/Play-disabled.svg");
-        SetSvgSource(PauseButtonIcon, PauseButton.IsEnabled ? "ms-appx:///logos/Pause_default.svg" : "ms-appx:///logos/Pause-Disabled.svg");
+        SetSvgSource(
+            PlaybackButtonIcon,
+            viewModel.IsPlaying
+                ? (PlaybackButton.IsEnabled ? "ms-appx:///logos/Pause_default.svg" : "ms-appx:///logos/Pause-Disabled.svg")
+                : (PlaybackButton.IsEnabled ? "ms-appx:///logos/Play.svg" : "ms-appx:///logos/Play-disabled.svg"));
         SetSvgSource(NextButtonIcon, NextButton.IsEnabled ? "ms-appx:///logos/Next.svg" : "ms-appx:///logos/Next-disabled.svg");
         SetSvgSource(KeyImageButtonIcon, KeyImageButton.IsEnabled ? "ms-appx:///logos/key.svg" : "ms-appx:///logos/key-disabled.svg");
         SetSvgSource(LoadButtonIcon, LoadButton.IsEnabled ? "ms-appx:///logos/Load.svg" : "ms-appx:///logos/load-disabled.svg");
@@ -72,6 +77,12 @@ public sealed partial class MainWindow : Window
 
     private static void SetSvgSource(Microsoft.UI.Xaml.Controls.Image image, string uri)
     {
+        if (string.Equals(image.Tag as string, uri, StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
         image.Source = new SvgImageSource(new Uri(uri));
+        image.Tag = uri;
     }
 }
