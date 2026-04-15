@@ -52,44 +52,79 @@
                 x:Name="PreviousButton"
                 Grid.Column="1"
                 Command="{Binding PreviousImageCommand}"
-                Content="Prev"
-                MinWidth="72" />
+                MinWidth="44"
+                Padding="10,8">
+                <Image
+                    x:Name="PreviousButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
 
             <Button
                 x:Name="PlayButton"
                 Grid.Column="2"
                 Command="{Binding PlayCommand}"
-                Content="Play"
-                MinWidth="72" />
+                MinWidth="44"
+                Padding="10,8">
+                <Image
+                    x:Name="PlayButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
 
             <Button
                 x:Name="PauseButton"
                 Grid.Column="2"
                 Command="{Binding PauseCommand}"
-                Content="Pause"
-                MinWidth="72"
-                Visibility="Collapsed" />
+                MinWidth="44"
+                Padding="10,8"
+                Visibility="Collapsed">
+                <Image
+                    x:Name="PauseButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
 
             <Button
                 x:Name="NextButton"
                 Grid.Column="3"
                 Command="{Binding NextImageCommand}"
-                Content="Next"
-                MinWidth="72" />
+                MinWidth="44"
+                Padding="10,8">
+                <Image
+                    x:Name="NextButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
 
-            <ComboBox
-                x:Name="SpeedComboBox"
+            <StackPanel
                 Grid.Column="4"
-                IsEnabled="{Binding ArePlaybackControlsEnabled}"
-                ItemsSource="{Binding SpeedOptions}"
-                SelectedItem="{Binding SelectedSpeed, Mode=TwoWay}" />
+                Orientation="Horizontal"
+                Spacing="8"
+                VerticalAlignment="Center">
+                <Image
+                    x:Name="SpeedIcon"
+                    Width="18"
+                    Height="18" />
+                <ComboBox
+                    x:Name="SpeedComboBox"
+                    Width="110"
+                    IsEnabled="{Binding ArePlaybackControlsEnabled}"
+                    ItemsSource="{Binding SpeedOptions}"
+                    SelectedItem="{Binding SelectedSpeed, Mode=TwoWay}" />
+            </StackPanel>
 
             <Button
                 x:Name="KeyImageButton"
                 Grid.Column="5"
                 Command="{Binding GoToKeyImageCommand}"
-                Content="Key Image"
-                MinWidth="92" />
+                MinWidth="44"
+                Padding="10,8">
+                <Image
+                    x:Name="KeyImageButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
 
             <ComboBox
                 Grid.Column="6"
@@ -98,10 +133,16 @@
                 PlaceholderText="Select scan" />
 
             <Button
+                x:Name="LoadButton"
                 Grid.Column="7"
                 Command="{Binding LoadScanCommand}"
-                Content=">>"
-                MinWidth="56" />
+                MinWidth="44"
+                Padding="10,8">
+                <Image
+                    x:Name="LoadButtonIcon"
+                    Width="18"
+                    Height="18" />
+            </Button>
         </Grid>
 
         <Grid

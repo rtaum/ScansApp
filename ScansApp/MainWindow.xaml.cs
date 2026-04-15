@@ -25,7 +25,10 @@ public sealed partial class MainWindow : Window
         if (e.PropertyName is nameof(MainViewModel.CurrentPlaneAImagePath)
             or nameof(MainViewModel.CurrentPlaneBImagePath)
             or nameof(MainViewModel.IsScanLoaded)
-            or nameof(MainViewModel.IsPlaying))
+            or nameof(MainViewModel.IsPlaying)
+            or nameof(MainViewModel.ArePlaybackControlsEnabled)
+            or nameof(MainViewModel.CurrentImageIndex)
+            or nameof(MainViewModel.SelectedScanId))
         {
             UpdateDisplayedImages();
             UpdateControlState();
@@ -42,6 +45,14 @@ public sealed partial class MainWindow : Window
     {
         PlayButton.Visibility = viewModel.IsPlaying ? Visibility.Collapsed : Visibility.Visible;
         PauseButton.Visibility = viewModel.IsPlaying ? Visibility.Visible : Visibility.Collapsed;
+
+        SetSvgSource(PreviousButtonIcon, PreviousButton.IsEnabled ? "ms-appx:///logos/Prev.svg" : "ms-appx:///logos/Prev-disabled.svg");
+        SetSvgSource(PlayButtonIcon, PlayButton.IsEnabled ? "ms-appx:///logos/Play.svg" : "ms-appx:///logos/Play-disabled.svg");
+        SetSvgSource(PauseButtonIcon, PauseButton.IsEnabled ? "ms-appx:///logos/Pause_default.svg" : "ms-appx:///logos/Pause-Disabled.svg");
+        SetSvgSource(NextButtonIcon, NextButton.IsEnabled ? "ms-appx:///logos/Next.svg" : "ms-appx:///logos/Next-disabled.svg");
+        SetSvgSource(KeyImageButtonIcon, KeyImageButton.IsEnabled ? "ms-appx:///logos/key.svg" : "ms-appx:///logos/key-disabled.svg");
+        SetSvgSource(LoadButtonIcon, LoadButton.IsEnabled ? "ms-appx:///logos/Load.svg" : "ms-appx:///logos/load-disabled.svg");
+        SetSvgSource(SpeedIcon, SpeedComboBox.IsEnabled ? "ms-appx:///logos/Speed.svg" : "ms-appx:///logos/Speed-disabled.svg");
     }
 
     private static void SetImageSource(Microsoft.UI.Xaml.Controls.Image image, Microsoft.UI.Xaml.Controls.TextBlock placeholder, string? imagePath)
@@ -57,5 +68,10 @@ public sealed partial class MainWindow : Window
         image.Source = new BitmapImage(new Uri(imagePath));
         image.Visibility = Visibility.Visible;
         placeholder.Visibility = Visibility.Collapsed;
+    }
+
+    private static void SetSvgSource(Microsoft.UI.Xaml.Controls.Image image, string uri)
+    {
+        image.Source = new SvgImageSource(new Uri(uri));
     }
 }
