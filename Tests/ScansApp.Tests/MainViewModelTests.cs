@@ -81,9 +81,9 @@ public sealed class MainViewModelTests : IDisposable
     }
 
     [Fact]
-    public void NextAndPreviousCommands_StopAtScanBounds()
+    public void NextAndPreviousCommands_WrapAroundAtScanBounds()
     {
-        CreateScan("100001", planeAImageCount: 3, planeBImageCount: 3);
+        CreateScan("100001", planeAImageCount: 4, planeBImageCount: 4);
 
         var repository = new FileSystemScanRepository(scansRoot);
         var viewModel = new MainViewModel(repository, playbackScheduler);
@@ -97,18 +97,18 @@ public sealed class MainViewModelTests : IDisposable
 
         viewModel.NextImageCommand.Execute(null);
         viewModel.NextImageCommand.Execute(null);
+        viewModel.NextImageCommand.Execute(null);
 
-        Assert.Equal(2, viewModel.CurrentImageIndex);
+        Assert.Equal(3, viewModel.CurrentImageIndex);
         Assert.True(viewModel.NextImageCommand.CanExecute(null));
 
         viewModel.NextImageCommand.Execute(null);
 
-        Assert.Equal(2, viewModel.CurrentImageIndex);
-
-        viewModel.PreviousImageCommand.Execute(null);
-        viewModel.PreviousImageCommand.Execute(null);
-
         Assert.Equal(0, viewModel.CurrentImageIndex);
+
+        viewModel.PreviousImageCommand.Execute(null);
+
+        Assert.Equal(3, viewModel.CurrentImageIndex);
         Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
     }
 

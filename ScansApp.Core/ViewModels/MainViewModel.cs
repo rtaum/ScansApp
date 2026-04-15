@@ -208,7 +208,12 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        SetCurrentImageIndex(CurrentImageIndex + 1);
+        if (LoadedScan is null || LoadedScan.ImageCount == 0)
+        {
+            return;
+        }
+
+        SetCurrentImageIndex((CurrentImageIndex + 1) % LoadedScan.ImageCount);
     }
 
     [RelayCommand(CanExecute = nameof(CanMovePrevious))]
@@ -219,7 +224,12 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        SetCurrentImageIndex(CurrentImageIndex - 1);
+        if (LoadedScan is null || LoadedScan.ImageCount == 0)
+        {
+            return;
+        }
+
+        SetCurrentImageIndex(CurrentImageIndex == 0 ? LoadedScan.ImageCount - 1 : CurrentImageIndex - 1);
     }
 
     [RelayCommand(CanExecute = nameof(CanGoToKeyImage))]
