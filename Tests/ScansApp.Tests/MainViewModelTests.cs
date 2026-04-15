@@ -230,6 +230,31 @@ public sealed class MainViewModelTests : IDisposable
     }
 
     [Fact]
+    public void KeyImageCommand_IsDisabledWhilePlaying_AndEnabledWhenPaused()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.PlayCommand.Execute(null);
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.PauseCommand.Execute(null);
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.GoToKeyImageCommand.Execute(null);
+        Assert.True(viewModel.GoToKeyImageCommand.CanExecute(null));
+
+        viewModel.PlayCommand.Execute(null);
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+    }
+
+    [Fact]
     public void SliderValue_ChangesDisplayedImagesAccordingToPosition()
     {
         CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
