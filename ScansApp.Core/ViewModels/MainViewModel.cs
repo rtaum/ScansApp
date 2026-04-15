@@ -165,9 +165,10 @@ public partial class MainViewModel : ObservableObject
     private void LoadScan()
     {
         StopPlayback();
+        SelectedSpeed = NormalSpeed;
+        ArePlaybackControlsEnabled = false;
         LoadedScan = scanRepository.LoadScan(SelectedScanId!);
         CurrentImageIndex = LoadedScan.KeyImageIndex;
-        ArePlaybackControlsEnabled = false;
     }
 
     [RelayCommand(CanExecute = nameof(CanPlay))]

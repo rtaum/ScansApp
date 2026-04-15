@@ -293,6 +293,35 @@ public sealed class MainViewModelTests : IDisposable
         Assert.Equal(2, playbackScheduler.StartCount);
     }
 
+    [Fact]
+    public void LoadScanCommand_LoadingAnotherScan_ResetsControlsAndPosition()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+        CreateScan("200002", planeAImageCount: 3, planeBImageCount: 3);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.SelectedSpeed = "Fast";
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
+        viewModel.SliderValue = 4;
+
+        viewModel.SelectedScanId = "200002";
+        viewModel.LoadScanCommand.Execute(null);
+
+        Assert.False(viewModel.IsPlaying);
+        Assert.False(viewModel.ArePlaybackControlsEnabled);
+        Assert.Equal("Normal", viewModel.SelectedSpeed);
+        Assert.Equal("200002", viewModel.LoadedScan!.Id);
+        Assert.Equal(1, viewModel.CurrentImageIndex);
+        Assert.Equal(1d, viewModel.SliderValue);
+        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.False(viewModel.NextImageCommand.CanExecute(null));
+        Assert.False(viewModel.GoToKeyImageCommand.CanExecute(null));
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(scansRoot))
