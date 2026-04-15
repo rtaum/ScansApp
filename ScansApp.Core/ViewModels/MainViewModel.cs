@@ -53,6 +53,8 @@ public partial class MainViewModel : ObservableObject
                 OnPropertyChanged(nameof(IsScanLoaded));
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                NextImageCommand.NotifyCanExecuteChanged();
+                PreviousImageCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -68,6 +70,8 @@ public partial class MainViewModel : ObservableObject
             {
                 OnPropertyChanged(nameof(CurrentPlaneAImagePath));
                 OnPropertyChanged(nameof(CurrentPlaneBImagePath));
+                NextImageCommand.NotifyCanExecuteChanged();
+                PreviousImageCommand.NotifyCanExecuteChanged();
             }
         }
     }
@@ -83,7 +87,33 @@ public partial class MainViewModel : ObservableObject
         CurrentImageIndex = LoadedScan.KeyImageIndex;
     }
 
+    [RelayCommand(CanExecute = nameof(CanMoveNext))]
+    private void NextImage()
+    {
+        if (!CanMoveNext())
+        {
+            return;
+        }
+
+        CurrentImageIndex++;
+    }
+
+    [RelayCommand(CanExecute = nameof(CanMovePrevious))]
+    private void PreviousImage()
+    {
+        if (!CanMovePrevious())
+        {
+            return;
+        }
+
+        CurrentImageIndex--;
+    }
+
     private bool CanLoadScan() => !string.IsNullOrWhiteSpace(SelectedScanId);
+
+    private bool CanMoveNext() => LoadedScan is not null && CurrentImageIndex < LoadedScan.ImageCount - 1;
+
+    private bool CanMovePrevious() => LoadedScan is not null && CurrentImageIndex > 0;
 
     private string? GetCurrentImagePath(IReadOnlyList<string>? images)
     {

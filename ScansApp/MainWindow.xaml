@@ -31,17 +31,31 @@
             Grid.Row="1"
             ColumnSpacing="12">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
+            <Button
+                Command="{Binding PreviousImageCommand}"
+                Content="Prev"
+                MinWidth="72" />
+
+            <Button
+                Grid.Column="1"
+                Command="{Binding NextImageCommand}"
+                Content="Next"
+                MinWidth="72" />
+
             <ComboBox
+                Grid.Column="2"
                 ItemsSource="{Binding AvailableScanIds}"
                 SelectedItem="{Binding SelectedScanId, Mode=TwoWay}"
                 PlaceholderText="Select scan" />
 
             <Button
-                Grid.Column="1"
+                Grid.Column="3"
                 Command="{Binding LoadScanCommand}"
                 Content=">>"
                 MinWidth="56" />

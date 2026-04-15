@@ -54,6 +54,58 @@ public sealed class MainViewModelTests : IDisposable
         Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
     }
 
+    [Fact]
+    public void NextAndPreviousCommands_MoveBothPlanesTogether()
+    {
+        CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository);
+
+        viewModel.LoadScanCommand.Execute(null);
+
+        viewModel.NextImageCommand.Execute(null);
+
+        Assert.Equal(3, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_003.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_003.png", viewModel.CurrentPlaneBImagePath);
+
+        viewModel.PreviousImageCommand.Execute(null);
+
+        Assert.Equal(2, viewModel.CurrentImageIndex);
+        Assert.EndsWith(@"Plane-A\image_002.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_002.png", viewModel.CurrentPlaneBImagePath);
+    }
+
+    [Fact]
+    public void NextAndPreviousCommands_StopAtScanBounds()
+    {
+        CreateScan("100001", planeAImageCount: 3, planeBImageCount: 3);
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository);
+
+        viewModel.LoadScanCommand.Execute(null);
+
+        Assert.True(viewModel.PreviousImageCommand.CanExecute(null));
+        Assert.True(viewModel.NextImageCommand.CanExecute(null));
+
+        viewModel.NextImageCommand.Execute(null);
+
+        Assert.Equal(2, viewModel.CurrentImageIndex);
+        Assert.False(viewModel.NextImageCommand.CanExecute(null));
+
+        viewModel.NextImageCommand.Execute(null);
+
+        Assert.Equal(2, viewModel.CurrentImageIndex);
+
+        viewModel.PreviousImageCommand.Execute(null);
+        viewModel.PreviousImageCommand.Execute(null);
+
+        Assert.Equal(0, viewModel.CurrentImageIndex);
+        Assert.False(viewModel.PreviousImageCommand.CanExecute(null));
+    }
+
     public void Dispose()
     {
         if (Directory.Exists(scansRoot))
