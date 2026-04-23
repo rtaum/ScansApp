@@ -48,50 +48,50 @@
     <Compile Remove="ViewModels\**\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="logos\" />
+    <Folder Include="Assets\Icons\" />
     <Folder Include="scans\" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="logos\key-disabled.svg">
+    <None Update="Assets\Icons\key-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\key.svg">
+    <None Update="Assets\Icons\key.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\load-disabled.svg">
+    <None Update="Assets\Icons\load-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Load.svg">
+    <None Update="Assets\Icons\Load.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Next-disabled.svg">
+    <None Update="Assets\Icons\Next-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Next.svg">
+    <None Update="Assets\Icons\Next.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Pause-Disabled.svg">
+    <None Update="Assets\Icons\Pause-Disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Pause_default.svg">
+    <None Update="Assets\Icons\Pause_default.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Play-disabled.svg">
+    <None Update="Assets\Icons\Play-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Play.svg">
+    <None Update="Assets\Icons\Play.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Prev-disabled.svg">
+    <None Update="Assets\Icons\Prev-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Prev.svg">
+    <None Update="Assets\Icons\Prev.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Speed-disabled.svg">
+    <None Update="Assets\Icons\Speed-disabled.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="logos\Speed.svg">
+    <None Update="Assets\Icons\Speed.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="scans\123456\Plane-A\1.3.12.2.1107.5.4.5.121068.30000021012315112453400000298.4_0.png">

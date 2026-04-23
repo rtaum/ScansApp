@@ -179,12 +179,17 @@
             </Grid.ColumnDefinitions>
 
             <Border
+                VerticalAlignment="Stretch"
                 Padding="10"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="12">
-                <StackPanel Spacing="10">
+                <Grid RowSpacing="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -192,12 +197,18 @@
                         FontSize="12"
                         FontWeight="SemiBold" />
                     <Border
+                        Grid.Row="1"
+                        VerticalAlignment="Stretch"
                         MinHeight="308"
                         Background="#8B8B8B"
                         CornerRadius="6">
                         <Grid>
                             <Image
-                                x:Name="PlaneAImage"
+                                x:Name="PlaneAImagePrimary"
+                                Stretch="Uniform"
+                                Visibility="Collapsed" />
+                            <Image
+                                x:Name="PlaneAImageSecondary"
                                 Stretch="Uniform"
                                 Visibility="Collapsed" />
                             <TextBlock
@@ -209,17 +220,22 @@
                                 FontSize="18" />
                         </Grid>
                     </Border>
-                </StackPanel>
+                </Grid>
             </Border>
 
             <Border
                 Grid.Column="1"
+                VerticalAlignment="Stretch"
                 Padding="10"
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="12">
-                <StackPanel Spacing="10">
+                <Grid RowSpacing="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
                     <TextBlock
                         HorizontalAlignment="Center"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -227,12 +243,18 @@
                         FontSize="12"
                         FontWeight="SemiBold" />
                     <Border
+                        Grid.Row="1"
+                        VerticalAlignment="Stretch"
                         MinHeight="308"
                         Background="#8B8B8B"
                         CornerRadius="6">
                         <Grid>
                             <Image
-                                x:Name="PlaneBImage"
+                                x:Name="PlaneBImagePrimary"
+                                Stretch="Uniform"
+                                Visibility="Collapsed" />
+                            <Image
+                                x:Name="PlaneBImageSecondary"
                                 Stretch="Uniform"
                                 Visibility="Collapsed" />
                             <TextBlock
@@ -244,7 +266,7 @@
                                 FontSize="18" />
                         </Grid>
                     </Border>
-                </StackPanel>
+                </Grid>
             </Border>
         </Grid>
     </Grid>

@@ -59,6 +59,31 @@ public sealed class MainViewModelTests : IDisposable
     }
 
     [Fact]
+    public void LoadScanCommand_SortsImagesByFileName()
+    {
+        CreateScanWithCustomImageNames("100001", "Plane-A", "image_1.png", "image_2.png", "image_10.png");
+        CreateScanWithCustomImageNames("100001", "Plane-B", "image_1.png", "image_2.png", "image_10.png");
+
+        var repository = new FileSystemScanRepository(scansRoot);
+        var viewModel = new MainViewModel(repository, playbackScheduler);
+
+        viewModel.LoadScanCommand.Execute(null);
+        viewModel.PlayCommand.Execute(null);
+        viewModel.PauseCommand.Execute(null);
+
+        Assert.EndsWith(@"Plane-A\image_1.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_1.png", viewModel.CurrentPlaneBImagePath);
+
+        viewModel.NextImageCommand.Execute(null);
+        Assert.EndsWith(@"Plane-A\image_2.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_2.png", viewModel.CurrentPlaneBImagePath);
+
+        viewModel.NextImageCommand.Execute(null);
+        Assert.EndsWith(@"Plane-A\image_10.png", viewModel.CurrentPlaneAImagePath);
+        Assert.EndsWith(@"Plane-B\image_10.png", viewModel.CurrentPlaneBImagePath);
+    }
+
+    [Fact]
     public void NextAndPreviousCommands_MoveBothPlanesTogether()
     {
         CreateScan("100001", planeAImageCount: 5, planeBImageCount: 5);
@@ -437,6 +462,17 @@ public sealed class MainViewModelTests : IDisposable
         for (var i = 0; i < planeBImageCount; i++)
         {
             File.WriteAllText(Path.Combine(planeBDirectory, $"image_{i:000}.png"), string.Empty);
+        }
+    }
+
+    private void CreateScanWithCustomImageNames(string scanId, string planeName, params string[] imageNames)
+    {
+        var planeDirectory = Path.Combine(scansRoot, scanId, planeName);
+        Directory.CreateDirectory(planeDirectory);
+
+        foreach (var imageName in imageNames)
+        {
+            File.WriteAllText(Path.Combine(planeDirectory, imageName), string.Empty);
         }
     }
 
